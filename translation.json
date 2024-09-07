@@ -1396,9 +1396,9 @@
       "name": "Português",
       "code": "pt",
       "translation": {
-        "AppName": "Gerenciador de arquivos Tiny",
-        "AppTitle": "Gerenciador de arquivos",
-        "Login": "Iniciar Sessão",
+        "AppName": "Gerenciador de arquivos",
+        "AppTitle": "Escola de Minas",
+        "Login": "Login",
         "Username": "Nome de usuário",
         "Password": "Senha",
         "Logout": "Sair",
