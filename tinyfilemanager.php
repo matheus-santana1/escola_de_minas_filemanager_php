@@ -63,7 +63,7 @@ $root_path = $_SERVER['DOCUMENT_ROOT'].'/arquivos';
 
 // Root url for links in file manager.Relative to $http_host. Variants: '', 'path/to/subfolder'
 // Will not working if $root_path will be outside of server document root
-$root_url = '';
+$root_url = '/arquivos';
 
 // Server hostname. Can set manually if wrong
 // $_SERVER['HTTP_HOST'].'/folder'
@@ -1269,6 +1269,8 @@ if (isset($_POST['chmod'], $_POST['token']) && !FM_READONLY && !FM_IS_WIN) {
 
 /*************************** ACTIONS ***************************/
 
+include "em.php";
+
 // get current path
 $path = FM_ROOT_PATH;
 if (FM_PATH != '') {
@@ -2224,7 +2226,28 @@ $tableTheme = (FM_THEME == "dark") ? "text-white bg-dark table-dark" : "bg-white
                     <a href="javascript:document.getElementById('a-tar').click();" class="btn btn-small btn-outline-primary btn-2"><i class="fa fa-file-archive-o"></i> <?php echo lng('Tar') ?> </a></li>
                 <li class="list-inline-item"><input type="submit" class="hidden" name="copy" id="a-copy" value="Copy">
                     <a href="javascript:document.getElementById('a-copy').click();" class="btn btn-small btn-outline-primary btn-2"><i class="fa fa-files-o"></i> <?php echo lng('Copy') ?> </a></li>
-            </ul>
+                <?php
+                    if (in_array(FM_PATH, EM_ARRAY_MULTIPLE_FOLDERS)) {
+                    ?>
+                        <li class="list-inline-item">
+                            <input type="submit" class="hidden" name="gz" id="a-gz" value="MULTIPLE">
+                            <a href="javascript:document.getElementById('a-gz').click();" class="btn btn-small btn-warning btn-2">
+                                <i class="fa fa-folder"></i> Criar .gz
+                            </a>
+                        </li>
+                        <?php
+                    } elseif (in_array(FM_PATH, EM_ARRAY_SINGLE_FOLDERS)) {
+                    ?>
+                        <li class="list-inline-item">
+                            <input type="submit" class="hidden" name="gz" id="a-gz" value="SINGLE">
+                            <a href="javascript:document.getElementById('a-gz').click();" class="btn btn-small btn-warning btn-2">
+                                <i class="fa fa-file"></i> Criar .gz
+                            </a>
+                        </li>
+                        <?php
+                    }
+                    ?>
+                </ul>
         </div>
         <div class="col-3 d-none d-sm-block"><a href="https://tinyfilemanager.github.io" target="_blank" class="float-right text-muted">Tiny File Manager <?php echo VERSION; ?></a></div>
         <?php else: ?>
@@ -4221,7 +4244,7 @@ $isStickyNavBar = $sticky_navbar ? 'navbar-fixed' : 'navbar-normal';
                 if(selectedValue && selectionType == "mode") {
                     editor.getSession().setMode(selectedValue);
                 } else if(selectedValue && selectionType == "theme") {
-                    editor.setTheme(selectedValue);
+                    editor.setTheme(selectedValue); ///teste
                 }else if(selectedValue && selectionType == "fontSize") {
                     editor.setFontSize(parseInt(selectedValue));
                 }
